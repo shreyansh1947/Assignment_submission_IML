@@ -9,36 +9,42 @@ Original file is located at
 
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
+N = 50
+S = np.arange(1, N, 0.1)
+o = np.linspace(0.1, 0.9, 100)
+
+# MLE
 def L(S, o):
-    # Sample implementation of L(S, o)
-    return np.sin(S) * np.cos(o)
+    return S * np.log(o) + (N - S) * np.log(1. - o)
 
-# Generate data for heatmap
-S = np.linspace(0, 1, 100)
-o = np.linspace(0, 1, 100)
-S, o = np.meshgrid(S, o)
-Z = L(S, o)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
+fig.suptitle("Maximum Likelihood Estimation")
 
-# Plot p2 (heatmap)
-plt.subplot(2, 1, 1)
-plt.imshow(Z, extent=(0, 1, 0, 1), origin='lower', cmap='jet')
-plt.xlabel('S')
-plt.ylabel('o')
-plt.title("Bird's eye view")
-plt.axvline(12, color='black')  # Add vertical line
+# Bird's Eye View Heatmap
+heatmap = ax1.imshow(L(np.repeat(S[:, np.newaxis], len(o), axis=1), np.repeat(o[np.newaxis, :], len(S), axis=0)),
+                     cmap='jet', origin='lower', aspect='auto', extent=[S.min(), S.max(), o.min(), o.max()])
+ax1.set_xlabel('S')
+ax1.set_ylabel('θ')
+ax1.set_title("Bird's Eye View")
 
-# Plot p3 (curve)
-plt.subplot(2, 1, 2)
-plt.plot(o, L(25, o))
-plt.xlabel('o')
-plt.title('L(o|S=12)')
+ax1.axvline(x=12, color='black')
+
+# L(o|S=12) Plot
+ax2.plot(o, L(12, o), color='blue')
+ax2.set_xlabel('o')
+ax2.set_title("L(o|S=12)")
 
 # Adjust spacing between subplots
-plt.tight_layout()
+plt.subplots_adjust(wspace=0.5)
+
+# Create the directory if it doesn't exist
+directory = './pictures/'
+os.makedirs(directory, exist_ok=True)
 
 # Save the figure
-plt.savefig('python_fig.png')
+plt.savefig(directory + 's-theta-L-12.png')
 
-# Display the figure
+# Display the plot
 plt.show()
