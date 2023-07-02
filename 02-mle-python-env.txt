@@ -1,0 +1,17 @@
+﻿conda create --name myenv
+
+
+conda activate myenv
+
+
+source activate myenv
+
+
+conda install numpy
+
+
+conda install matplotlib
+
+
+import numpy
+import matplotlib
