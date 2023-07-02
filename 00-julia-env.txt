@@ -3,9 +3,7 @@ We have seted up an conda Environment named j1.8
  2. conda activate j1.8
  3. conda install julia=1.8
 
-We are using Plots pkg for this code 
-so we will add it like this
-run julia in terminal
+In this code, we utilize the Plots package, which is necessary for our task. To incorporate it into our code, we follow these steps: execute Julia in the terminal.
 
 julia> using Pkg
 
